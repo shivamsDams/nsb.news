@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth Callback</title>
+</head>
+<body>
+    <h1>Authorization Successful!</h1>
+    <p>You can close this page and return to the app.</p>
+    <script>
+        // Optionally, capture the code from URL (e.g., ?code=YOUR_CODE)
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        console.log("Authorization code:", code);
+    </script>
+</body>
+</html>
