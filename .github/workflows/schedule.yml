@@ -1,0 +1,33 @@
+name: Scheduled Run of main.py
+
+on:
+  schedule:
+    - cron: "0 */4 * * *"  # Runs every 4 hours
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'  # Specify Python version for consistency
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Create .env file from secret
+        run: |
+          echo "${{ secrets.ENV_FILE }}" | tr -d '\r' > .env  # Removes any Windows-style line endings
+
+      - name: Run main.py
+        env:
+          # Export environment variables if needed
+          ENV_FILE: ${{ secrets.ENV_FILE }}
+        run: python main.py

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Callback Handler</title>
+</head>
+<body>
+    <h1>Meta Callback Handler</h1>
+    <div id="message"></div>
+
+    <script>
+        // Determine which callback this is based on query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const callbackType = urlParams.get('callback');
+
+        // Display different messages based on the callback type
+        const messageElement = document.getElementById('message');
+
+        if (callbackType === 'auth') {
+            // OAuth Redirect Callback
+            const code = urlParams.get('code');
+            console.log("Authorization code:", code);
+            messageElement.innerHTML = `<h2>Authorization Successful</h2><p>Code: ${code}</p>`;
+        } else if (callbackType === 'deauthorize') {
+            // Uninstall Callback
+            messageElement.innerHTML = `<h2>App Deauthorized</h2><p>The user has successfully deauthorized the app.</p>`;
+        } else if (callbackType === 'delete') {
+            // Delete Callback
+            messageElement.innerHTML = `<h2>Data Deletion Requested</h2><p>Your data deletion request has been received.</p>`;
+        } else {
+            messageElement.innerHTML = `<p>Unknown callback type.</p>`;
+        }
+    </script>
+</body>
+</html>
+
